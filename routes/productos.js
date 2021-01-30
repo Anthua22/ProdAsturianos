@@ -2,6 +2,8 @@ const express = require('express');
 
 const Producto = require(__dirname + '/../models/producto.js');
 const upload = require(__dirname + './../utils/uploadImagen');
+const Comentario = require(__dirname+'./../models/comentario')
+
 
 let router = express.Router();
 
@@ -123,9 +125,13 @@ router.put('/:id', upload.single('imagen'), (req, res) => {
 });
 
 router.post('/comentarios/:idProducto', (req, res) => {
+    let newComentario = {
+        nombre: req.session.usuario.login,
+        comentario: req.body.comentario
+    }
     Producto.findByIdAndUpdate(req.params['idProducto'], {//Buscamos el producto y insertamos en el array comentario el nuevo comentario
         $push: {
-            comentarios: req.body.comentario
+            comentarios: newComentario
         }
     }, {
         new: true
@@ -152,6 +158,7 @@ router.delete('/:id', (req, res) => {
         res.render('admin_error', { error: 'Error en la aplicación' })
     })
 });
+
 
 router.delete('/comentarios/:idProducto/:idComentario', (req, res) => {
     Producto.findByIdAndUpdate(req.params['idProducto'], {

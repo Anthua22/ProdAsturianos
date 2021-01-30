@@ -36,8 +36,8 @@ async function generarUsuarios() {
         console.log(err);
     });
 }
-Prodcuts.collection.drop();
-Usuario.find().then(x=>console.log(x))
+//Prodcuts.collection.drop();
+//Usuario.find().then(x=>console.log(x))
 Prodcuts.find().then(x=>console.log(x))
 
 let newProduct = new Prodcuts({  //Creamos el nuevo objeto con los valores correspondientes                                               
@@ -46,10 +46,10 @@ let newProduct = new Prodcuts({  //Creamos el nuevo objeto con los valores corre
     descripcion: 'req.body.descripcion',
     imagen: 'req.file.filename'
 });
-newProduct.save().then(x=>{
+/*newProduct.save().then(x=>{
     console.log(x)
 }).catch(err => console.log(err))
-//generarUsuarios();
+//generarUsuarios();*/
 
 
 
