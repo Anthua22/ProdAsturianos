@@ -1,0 +1,14 @@
+{%extends "publico_base.njk"%}
+
+{% block titulo %}Publico | Error{%endblock%}
+
+    {%block contenido%}
+        <h1>Error</h1>
+
+        {%if error | length > 0 %}
+            <div class="alert alert-danger">{{error}}</div>
+            {%else%}
+            <div class="alert alert-danger">Error en la aplicación</div>
+            {% endif%}
+
+            {%endblock%}

@@ -1,0 +1,30 @@
+{%extends "publico_base.njk"%}
+
+{%block titulo%}Login{%endblock%}
+
+    {%block contenido%}
+
+        {%if error%}
+            <div class="alert alert-danger mt-4" role="alert">
+                {{error}}
+            </div>
+
+            {%endif%}
+            <form action="/auth/login" id="form-login" class="mt-4" method="POST" role="form">
+                <legend>Bienvenidos a Productos Asturianos</legend>
+
+                <div class="form-group">
+                    <label for="correo">Login</label>
+                    <input type="text" class="form-control" name="login" id="email" placeholder="Email"/>
+
+                    <label for="password">Password:</label>
+                    <input type="password" class="form-control" name="password" id="password" [(ngmodel)]="user.password" placeholder="Contraseña"/>
+
+                </div>
+                <button type="submit" class="btn btn-primary" (click)="login()" [disabled]="prodForm.invalid">
+                    Entrar
+                </button>
+
+            </form>
+
+            {%endblock%}

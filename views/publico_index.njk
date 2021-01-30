@@ -1,0 +1,21 @@
+{%extends "publico_base.njk"%}
+
+{% block titulo %}Publico | Listado{%endblock%}
+
+    {%block contenido%}
+
+        <form action="/productos" method="POST" class="row mt-4">
+            <input name="nombre" placeholder="Buscador de productos" class="col-8 form-control"/>
+            <button type="submit" class="btn btn-success ml-2">Buscar</button>
+        </form>
+        <div class="mt-5">
+            {% if productos | length > 0 %}
+                <ul>
+                    {% for producto in productos %}
+                         <li><a href="/producto/{{producto.id}}">{{ producto.nombre }}</a></li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+
+    {%endblock%}

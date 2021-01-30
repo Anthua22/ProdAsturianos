@@ -1,0 +1,38 @@
+{%extends "admin_base.njk"%}
+
+{%block titulo %}Admin | Productos{%endblock%}
+
+  {%block contenido%}
+    <div class="card-columns mt-4 mb-4">
+      {% for producto in productos %}
+        <div class="card shadow">
+          <img class="card-img-top" src="/uploads/{{producto.imagen}}" alt="Card image cap">
+          <div class="card-body">
+            <h5 class="card-title">{{producto.nombre}}</h5>
+            <p class="card-text">{{producto.descripcion}}</p>
+
+            <div class="mb-3">
+              <span>Precio:
+              </span>
+              <span>{{producto.precio}}
+                €
+              </span>
+            </div>
+            <div>
+              <form action="/admin/{{ producto.id }}" method="post">
+                <input type="hidden" name="_method" value="delete"/>
+                <button type="submit" class="btn btn-danger">
+                  Borrar
+                </button>
+                <a href="/admin/editar/{{producto.id}}" class="btn btn-primary">Editar</a>
+                <a href="/admin/comentarios/{{producto.id}}" class="btn btn-primary">Comentar</a>
+              </form>
+
+            </div>
+
+          </div>
+        </div>
+      {% endfor %}
+
+    </div>
+    {%endblock%}

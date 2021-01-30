@@ -1,0 +1,21 @@
+{
+  "name": "prodasturianos_v2",
+  "version": "1.0.0",
+  "description": "Api Rest Productos Asuturianos con MongoDB",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Anthony Ubillus",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.0.0",
+    "bootstrap": "^4.6.0",
+    "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "method-override": "^3.0.0",
+    "mongoose": "^5.11.8",
+    "multer": "^1.4.2",
+    "nunjucks": "^3.2.2"
+  }
+}
