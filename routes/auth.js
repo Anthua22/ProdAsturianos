@@ -5,6 +5,7 @@ const bcrypt = require(__dirname + './../utils/bcrypt');
 let router = express.Router();
 
 router.get('/login', (req, res) => {
+    req.session.destroy();
     res.render('auth_login');
 });
 
@@ -24,11 +25,9 @@ router.post('/login', (req, res) => {
         })
 
     }).catch(err => {
-        res.render('auth_login', { error: err });
+        res.render('publico_error');
     })
 })
-
-
 
 router.get('/logout', (req, res) => {
     req.session.destroy();

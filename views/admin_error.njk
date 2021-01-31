@@ -4,7 +4,11 @@
 
     {%block contenido%}
         <h1>Error</h1>
-
+        {%if error %}
         <div class="alert alert-danger">{{error}}</div>
+        {%else%}
+        <div class="alert alert-danger">Error en la aplicación</div>
+        {%endif%}
+        
 
         {%endblock%}

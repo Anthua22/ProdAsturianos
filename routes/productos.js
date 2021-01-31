@@ -13,7 +13,7 @@ router.get('/', (req, res) => {
 
     }).catch(err => {
         console.log(err)
-        res.render('admin_error', { error: 'Error en la aplicación' })
+        res.render('admin_error')
     });
 });
 
@@ -25,7 +25,7 @@ router.get('/editar/:id', (req, res) => {
     Producto.findById(req.params['id']).then(resultado => {
         res.render('admin_productos_form', { producto: resultado });
     }).catch(err => {
-        res.render('admin_error', { error: 'Error en la aplicación' });
+        res.render('admin_error');
     })
 
 })
@@ -37,15 +37,11 @@ router.get('/comentarios/:id', (req, res) => {
             if (resultado) {//Comprobamos si el id existe, sino existe nos devuelve null la promesa
                 res.render('admin_productos_comentario', { producto: resultado });
             } else {
-                res.status(400).send({
-                    ok: false, error: "Producto no encontrado"
-                });
+                res.render('admin_error',{error:'Producto no encontrado'})
             }
 
         }).catch(err => {
-            res.status(500).send({
-                ok: false, error: err
-            });
+            res.render('admin_error')
         });
 });
 
@@ -62,15 +58,14 @@ router.post('/', upload.single('imagen'), (req, res) => {
     newProduct.save().then(x => {//Insertamos el producto
         res.redirect(req.baseUrl);
     }).catch(err => {
-        console.log(err);
-        res.render('admin_error', { error: err });
+        res.render('admin_error');
     });
 
 
 });
 
 
-router.put('/:id', upload.single('imagen'), (req, res) => {
+router.post('/:id', upload.single('imagen'), (req, res) => {
     //Comprobamos que tienen valor todos los campos indispensable para que así ningún campo luego se ponga a null 
     //y no se pierda la información que había antes
     if (req.file) {
@@ -78,20 +73,22 @@ router.put('/:id', upload.single('imagen'), (req, res) => {
         Producto.findByIdAndUpdate(req.params['id'], {
             $set: {
                 nombre: req.body.nombre,
-                precio: req.body.precio,
+                precio: parseInt(req.body.precio),
                 descripcion: req.body.descripcion,
                 imagen: req.file.filename
             }
         }, {
             new: true
         }).then(x => {
-
-            res.redirect(req.baseUrl);
-
-
+            if(x){
+                res.redirect(req.baseUrl);
+            }else{
+                res.render('admin_error',{error:'Error modificando el producto'})
+            }
+            
         }).catch(err => {
 
-            res.render('admin_error', { error: 'Error en la aplicación' });
+            res.render('admin_error');
 
         })
     }
@@ -99,7 +96,7 @@ router.put('/:id', upload.single('imagen'), (req, res) => {
         Producto.findByIdAndUpdate(req.params['id'], {
             $set: {
                 nombre: req.body.nombre,
-                precio: req.body.precio,
+                precio: parseInt(req.body.precio),
                 descripcion: req.body.descripcion
             }
         }, {
@@ -113,7 +110,7 @@ router.put('/:id', upload.single('imagen'), (req, res) => {
 
         }).catch(err => {
 
-            res.render('admin_error', { error: 'Error modificando el producto' });
+            res.render('admin_error');
 
         })
     }
@@ -138,7 +135,7 @@ router.post('/comentarios/:idProducto', (req, res) => {
             res.render('admin_error', { error: 'No existe el producto' })
         }
     }).catch(err => {
-        res.render('admin_error', { error: 'Error en la aplicación' })
+        res.render('admin_error')
 
     })
 })
@@ -151,7 +148,7 @@ router.delete('/:id', (req, res) => {
         }
 
     }).catch(err => {
-        res.render('admin_error', { error: 'Error en la aplicación' })
+        res.render('admin_error')
     })
 });
 
@@ -172,7 +169,7 @@ router.delete('/comentarios/:idProducto/:idComentario', (req, res) => {
             }
 
         }).catch(err => {
-            res.render('admin_error',{error:'Error en la aplicación'});
+            res.render('admin_error');
         })
 });
 

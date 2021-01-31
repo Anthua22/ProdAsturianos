@@ -3,8 +3,9 @@
 {% block titulo%}Admin | Formulario{%endblock%}
     {%block contenido%}
         <div class="mt-4">
-            {%if producto %}
-                <form action="/admin/{{producto.id}}" method="post">
+            <form action="/admin/{{producto.id}}" method="post" enctype="multipart/form-data">
+                {%if producto %}
+
                     <div class="form-group">
                         <label for="nombre">Nombre</label>
                         <input type="text" class="form-control" name="nombre" value="{{producto.nombre}}" required="required"/>
@@ -21,14 +22,9 @@
                         <label for="precio">Imagen</label>
                         <input type="file" class="form-control" name="imagen"/>
                     </div>
-                    <input type="hidden" name="_method" value="put"/>
-                    <button type="submit" class="btn btn-primary">
-                        Enviar
-                    </button>
-                </form>
-                {%else%}
 
-                <form action="/admin" method="POST" enctype="multipart/form-data">
+                    {%else%}
+
                     <div class="form-group">
                         <label for="nombre">Nombre</label>
                         <input type="text" class="form-control" name="nombre" value="{{producto.nombre}}" required="required"/>
@@ -45,12 +41,12 @@
                         <label for="precio">Imagen</label>
                         <input type="file" class="form-control" name="imagen" required="required"/>
                     </div>
+                    {%endif%}
+
                     <button type="submit" class="btn btn-primary">
                         Enviar
                     </button>
                 </form>
-                {%endif%}
-
             </div>
 
             {%endblock%}
