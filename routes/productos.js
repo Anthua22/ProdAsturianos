@@ -12,7 +12,6 @@ router.get('/', (req, res) => {
         res.render('admin_productos', { productos: resultado })
 
     }).catch(err => {
-        console.log(err)
         res.render('admin_error')
     });
 });

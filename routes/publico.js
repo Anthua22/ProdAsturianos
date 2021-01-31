@@ -9,7 +9,7 @@ router.get('/', (req, res) => {
         res.render('publico_index', { productos: resultado });
 
     }).catch(err => {
-        res.render('publico_error', { error: err });
+        res.render('publico_error');
     })
 });
 
@@ -27,7 +27,7 @@ router.post('/buscar', (req, res) => {
         }
         
     }).catch(err => {
-        res.render('publico_error', { error: err });
+        res.render('publico_error');
     })
 });
 
@@ -35,7 +35,7 @@ router.get('/producto/:id', (req, res) => {
     Producto.findById(req.params['id']).then(resultado => {
         res.render('publico_producto', { producto: resultado });
     }).catch(err => {
-        res.render('publico_error', { error: err });
+        res.render('publico_error');
     })
 
 });
