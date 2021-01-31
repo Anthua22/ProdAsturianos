@@ -3,9 +3,9 @@
 {% block titulo%}Admin | Formulario{%endblock%}
     {%block contenido%}
         <div class="mt-4">
-            <form action="/admin/{{producto.id}}" method="post" enctype="multipart/form-data">
-                {%if producto %}
 
+            {%if producto %}
+                <form action="/admin/productos/{{producto.id}}" method="post" enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="nombre">Nombre</label>
                         <input type="text" class="form-control" name="nombre" value="{{producto.nombre}}" required="required"/>
@@ -24,29 +24,29 @@
                     </div>
 
                     {%else%}
+                    <form action="/admin/productos" method="post" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="nombre">Nombre</label>
+                            <input type="text" class="form-control" name="nombre" value="{{producto.nombre}}" required="required"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="nombre">Descripción</label>
+                            <input type="text" class="form-control" name="descripcion" value="{{producto.descripcion}}" required="required"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="precio">Precio</label>
+                            <input type="text" class="form-control" name="precio" value="{{producto.precio}}" required="required"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="precio">Imagen</label>
+                            <input type="file" class="form-control" name="imagen" required="required"/>
+                        </div>
+                        {%endif%}
 
-                    <div class="form-group">
-                        <label for="nombre">Nombre</label>
-                        <input type="text" class="form-control" name="nombre" value="{{producto.nombre}}" required="required"/>
-                    </div>
-                    <div class="form-group">
-                        <label for="nombre">Descripción</label>
-                        <input type="text" class="form-control" name="descripcion" value="{{producto.descripcion}}" required="required"/>
-                    </div>
-                    <div class="form-group">
-                        <label for="precio">Precio</label>
-                        <input type="text" class="form-control" name="precio" value="{{producto.precio}}" required="required"/>
-                    </div>
-                    <div class="form-group">
-                        <label for="precio">Imagen</label>
-                        <input type="file" class="form-control" name="imagen" required="required"/>
-                    </div>
-                    {%endif%}
+                        <button type="submit" class="btn btn-primary">
+                            Enviar
+                        </button>
+                    </form>
+                </div>
 
-                    <button type="submit" class="btn btn-primary">
-                        Enviar
-                    </button>
-                </form>
-            </div>
-
-            {%endblock%}
+                {%endblock%}

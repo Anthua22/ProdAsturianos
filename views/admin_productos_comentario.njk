@@ -31,7 +31,7 @@
                             <h3>{{comentario.nombre}}</h3>
                         </p>
                         <p class="oblique">{{comentario.comentario}}</p>
-                        <form action="/admin/comentarios/{{producto.id}}/{{comentario.id}}" method="post">
+                        <form action="/admin/productos/comentarios/{{producto.id}}/{{comentario.id}}" method="post">
 
                             <input type="hidden" name="_method" value="delete"/>
                             <button type="submit" class="btn btn-danger">
@@ -43,7 +43,7 @@
                     </div>
                     {%endfor%}
 
-                    <form action="/admin/comentarios/{{producto.id}}" class="ml-3 mt-5" method="post">
+                    <form action="/admin/productos/comentarios/{{producto.id}}" class="ml-3 mt-5" method="post">
 
                         <input type="text" class="form-control" name="comentario"/>
                         <button type="submit" class="btn btn-primary mt-3">Enviar

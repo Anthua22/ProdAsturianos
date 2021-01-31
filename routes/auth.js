@@ -17,7 +17,7 @@ router.post('/login', (req, res) => {
             bcrypt.desincriptar(req.body.password, x[0].password).then(bool => { //comprobamos la contraseña si es correcta
                 if (bool) {
                     req.session.usuario = x[0]; //si es correcta redirigimos a /admin y sino renderizamos la vista de login mostrando un error
-                    res.redirect('/admin');
+                    res.redirect('/admin/productos');
                 } else {
                     res.render('auth_login', { error: "Contraseña incorrecta" });
                 }

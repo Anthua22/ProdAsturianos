@@ -19,13 +19,13 @@
               </span>
             </div>
             <div>
-              <form action="/admin/{{ producto.id }}" method="post">
+              <form action="/admin/productos/{{ producto.id }}" method="post">
                 <input type="hidden" name="_method" value="delete"/>
                 <button type="submit" class="btn btn-danger">
                   Borrar
                 </button>
-                <a href="/admin/editar/{{producto.id}}" class="btn btn-primary">Editar</a>
-                <a href="/admin/comentarios/{{producto.id}}" class="btn btn-primary">Comentarios</a>
+                <a href="/admin/productos/editar/{{producto.id}}" class="btn btn-primary">Editar</a>
+                <a href="/admin/productos/comentarios/{{producto.id}}" class="btn btn-primary">Comentarios</a>
               </form>
 
             </div>

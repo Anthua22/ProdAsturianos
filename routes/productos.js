@@ -7,7 +7,7 @@ const upload = require(__dirname + './../utils/uploadImagen');
 let router = express.Router();
 
 
-router.get('/', (req, res) => {
+router.get('/productos', (req, res) => {
     Producto.find().then(resultado => {
         res.render('admin_productos', { productos: resultado })
 
@@ -16,11 +16,11 @@ router.get('/', (req, res) => {
     });
 });
 
-router.get('/nuevo', (req, res) => {
+router.get('/productos/nuevo', (req, res) => {
     res.render('admin_productos_form');
 });
 
-router.get('/editar/:id', (req, res) => {
+router.get('/productos/editar/:id', (req, res) => {
     Producto.findById(req.params['id']).then(resultado => {
         res.render('admin_productos_form', { producto: resultado });
     }).catch(err => {
@@ -29,7 +29,7 @@ router.get('/editar/:id', (req, res) => {
 
 })
 
-router.get('/comentarios/:id', (req, res) => {
+router.get('/productos/comentarios/:id', (req, res) => {
 
     Producto.findById(req.params['id'])
         .then(resultado => {
@@ -45,7 +45,7 @@ router.get('/comentarios/:id', (req, res) => {
 });
 
 
-router.post('/', upload.single('imagen'), (req, res) => {
+router.post('/productos', upload.single('imagen'), (req, res) => {
 
     let newProduct = new Producto({  //Creamos el nuevo objeto con los valores correspondientes                                               
         nombre: req.body.nombre,
@@ -55,7 +55,7 @@ router.post('/', upload.single('imagen'), (req, res) => {
     });
 
     newProduct.save().then(x => {//Insertamos el producto
-        res.redirect(req.baseUrl);
+        res.redirect(req.baseUrl+'/productos');
     }).catch(err => {
         res.render('admin_error');
     });
@@ -64,7 +64,7 @@ router.post('/', upload.single('imagen'), (req, res) => {
 });
 
 
-router.post('/:id', upload.single('imagen'), (req, res) => {
+router.post('/productos/:id', upload.single('imagen'), (req, res) => {
     //Comprobamos que tienen valor todos los campos indispensable para que así ningún campo luego se ponga a null 
     //y no se pierda la información que había antes
     if (req.file) {
@@ -80,7 +80,7 @@ router.post('/:id', upload.single('imagen'), (req, res) => {
             new: true
         }).then(x => {
             if(x){
-                res.redirect(req.baseUrl);
+                res.redirect(req.baseUrl+'/productos');
             }else{
                 res.render('admin_error',{error:'Error modificando el producto'})
             }
@@ -102,7 +102,7 @@ router.post('/:id', upload.single('imagen'), (req, res) => {
             new: true
         }).then(x => {
             if (x) {
-                res.redirect(req.baseUrl);
+                res.redirect(req.baseUrl+'/productos');
             } else {
                 res.render('admin_error', { error: 'Error modificando el producto' });
             }
@@ -116,7 +116,7 @@ router.post('/:id', upload.single('imagen'), (req, res) => {
 
 });
 
-router.post('/comentarios/:idProducto', (req, res) => {
+router.post('/productos/comentarios/:idProducto', (req, res) => {
     let newComentario = {
         nombre: req.session.usuario.login,
         comentario: req.body.comentario
@@ -129,7 +129,7 @@ router.post('/comentarios/:idProducto', (req, res) => {
         new: true
     }).then(x => {
         if (x) {//Comprobamos si existía el id sino existía devolvería null
-            res.redirect(req.baseUrl+'/comentarios/'+req.params['idProducto']);
+            res.redirect(req.baseUrl+'/productos/comentarios/'+req.params['idProducto']);
         } else {
             res.render('admin_error', { error: 'No existe el producto' })
         }
@@ -139,11 +139,11 @@ router.post('/comentarios/:idProducto', (req, res) => {
     })
 })
 
-router.delete('/:id', (req, res) => {
+router.delete('/productos/:id', (req, res) => {
     Producto.findByIdAndRemove(req.params['id']).then(result => {
         console.log(result)
         if (result) {
-            res.redirect(req.baseUrl);
+            res.redirect(req.baseUrl+'/productos');
         }
 
     }).catch(err => {
@@ -152,7 +152,7 @@ router.delete('/:id', (req, res) => {
 });
 
 
-router.delete('/comentarios/:idProducto/:idComentario', (req, res) => {
+router.delete('/productos/comentarios/:idProducto/:idComentario', (req, res) => {
     Producto.findByIdAndUpdate(req.params['idProducto'], {
         $pull: {
             comentarios: { _id: req.params['idComentario'] }
@@ -162,7 +162,7 @@ router.delete('/comentarios/:idProducto/:idComentario', (req, res) => {
             new: true
         }).then(x => {
             if (x) {//Comprobamos si existía el comentario sino existía devolvería null
-                res.redirect('/admin/comentarios/'+req.params['idProducto']);
+                res.redirect('/admin/productos/comentarios/'+req.params['idProducto']);
             } else {
                 res.render('admin_error',{error:'No existe el comentario'})
             }
