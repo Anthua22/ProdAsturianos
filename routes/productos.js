@@ -2,7 +2,6 @@ const express = require('express');
 
 const Producto = require(__dirname + '/../models/producto.js');
 const upload = require(__dirname + './../utils/uploadImagen');
-const Comentario = require(__dirname+'./../models/comentario')
 
 
 let router = express.Router();
@@ -10,14 +9,11 @@ let router = express.Router();
 
 router.get('/', (req, res) => {
     Producto.find().then(resultado => {
-        if (resultado.length > 0) { //Comprobamos si hay algún elemento en el array para asegurarnos de que devuelve el array con valor
-            res.render('admin_productos', { productos: resultado })
-        } else {
-            res.render('admin_error', { error: 'No se encontraron productos' })
-        }
+        res.render('admin_productos', { productos: resultado })
+
     }).catch(err => {
         console.log(err)
-        res.render('admin_error', { error: err })
+        res.render('admin_error', { error: 'Error en la aplicación' })
     });
 });
 
@@ -29,7 +25,7 @@ router.get('/editar/:id', (req, res) => {
     Producto.findById(req.params['id']).then(resultado => {
         res.render('admin_productos_form', { producto: resultado });
     }).catch(err => {
-        res.render('admin_error', { error: 'Producto no encontrado' });
+        res.render('admin_error', { error: 'Error en la aplicación' });
     })
 
 })
@@ -39,7 +35,7 @@ router.get('/comentarios/:id', (req, res) => {
     Producto.findById(req.params['id'])
         .then(resultado => {
             if (resultado) {//Comprobamos si el id existe, sino existe nos devuelve null la promesa
-                res.render('admin_productos_comentario',{producto:resultado});
+                res.render('admin_productos_comentario', { producto: resultado });
             } else {
                 res.status(400).send({
                     ok: false, error: "Producto no encontrado"
@@ -139,11 +135,11 @@ router.post('/comentarios/:idProducto', (req, res) => {
         if (x) {//Comprobamos si existía el id sino existía devolvería null
             res.redirect(req.baseUrl)
         } else {
-            res.render('admin_error',{error:'No existe el producto'})
+            res.render('admin_error', { error: 'No existe el producto' })
         }
     }).catch(err => {
-        res.render('admin_error',{error:'Error en la aplicación'})
-       
+        res.render('admin_error', { error: 'Error en la aplicación' })
+
     })
 })
 

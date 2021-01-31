@@ -1,3 +1,14 @@
-img{
-    height: 350px;
+img {
+  height: 350px;
+}
+
+.caja_comentario {
+  padding: 10px;
+  border: black 5px solid;
+  width: auto;
+  border-radius: 10px 40px 40px 10px;
+}
+
+.oblique {
+  font-style: oblique;
 }

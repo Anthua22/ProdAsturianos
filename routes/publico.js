@@ -13,14 +13,13 @@ router.get('/', (req, res) => {
     })
 });
 
-router.get('/buscar', (req, res) => {
+router.post('/buscar', (req, res) => {
     let nombre = req.body.nombre;
+    let regex = new RegExp(nombre);
     Producto.find({
-        nombre: {
-            $regex: '/' + nombre + '/i'
-        }
+        nombre: regex
     }).then(resultado => {
-        res.render('publico_producto', { productos: resultado });
+        res.render('publico_index', { productos: resultado });
     }).catch(err => {
         res.render('publico_error', { error: err });
     })
