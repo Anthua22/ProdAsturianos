@@ -1,44 +1,54 @@
 {%extends "admin_base.njk"%}
 
 {%block titulo%}
-    Producto | Comentario 
-{%endblock%}
+    Producto | Comentario
+    {%endblock%}
 
-{%block estilos%}
-    <link rel="stylesheet" href="/css/estilos.css"/>
-{%endblock%}
+    {%block estilos%}
+        <link rel="stylesheet" href="/css/estilos.css"/>
+        {%endblock%}
 
-{%block contenido %}
+        {%block contenido %}
 
-    <div class="row mt-4">
-        <img class="col-3" src="/uploads/{{producto.imagen}}" alt="{{producto.nombre}}"/>
-        <div class="col-9">
-            <p><h3>{{producto.nombre}}</h3>
-            <p>{{producto.precio}} €</p>
-            <p>{{producto.descripcion}}</p>
-        </div>
-        
-        
-    </div>
-    <div class="row ml-4 mt-4">
-        <h3>Comentarios</h3>
-    </div>
-    {% for comentario in producto.comentarios %}
-        <div class="ml-4 mt-4 caja_comentario">
+            <div class="row mt-4">
+                <img class="col-3" src="/uploads/{{producto.imagen}}" alt="{{producto.nombre}}"/>
+                <div class="col-9">
+                    <p>
+                        <h3>{{producto.nombre}}</h3>
+                        <p>{{producto.precio}}
+                            €</p>
+                        <p>{{producto.descripcion}}</p>
+                    </div>
 
-            <p class="mb-3">
-                <h3>{{comentario.nombre}}</h3>
-            </p>
-            <p class="oblique">{{comentario.comentario}}</p>
-        </div>
-        {%endfor%}
+                </div>
+                <div class="row ml-4 mt-4">
+                    <h3>Comentarios</h3>
+                </div>
+                {% for comentario in producto.comentarios %}
+                    <div class="ml-4 mt-4 caja_comentario">
 
-        <form action="/admin/comentarios/{{producto.id}}" class="ml-3 mt-5" method="post">
+                        <p class="mb-3">
+                            <h3>{{comentario.nombre}}</h3>
+                        </p>
+                        <p class="oblique">{{comentario.comentario}}</p>
+                        <form action="/admin/comentarios/{{producto.id}}/{{comentario.id}}" method="post">
 
-            <input type="text" class="form-control" name="comentario"/>
-            <button type="submit" class="btn btn-primary mt-3">Enviar
-            </button>
+                            <input type="hidden" name="_method" value="delete"/>
+                            <button type="submit" class="btn btn-danger">
+                                Borrar
+                            </button>
 
-        </form>
+                        </form>
 
-{%endblock%}
+                    </div>
+                    {%endfor%}
+
+                    <form action="/admin/comentarios/{{producto.id}}" class="ml-3 mt-5" method="post">
+
+                        <input type="text" class="form-control" name="comentario"/>
+                        <button type="submit" class="btn btn-primary mt-3">Enviar
+                        </button>
+
+                    </form>
+
+                    {%endblock%}

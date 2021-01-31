@@ -9,13 +9,21 @@
             <button type="submit" class="btn btn-success ml-2">Buscar</button>
         </form>
         <div class="mt-5">
-            {% if productos | length > 0 %}
-                <ul>
-                    {% for producto in productos %}
-                         <li><a href="/producto/{{producto.id}}">{{ producto.nombre }}</a></li>
-                    {% endfor %}
-                </ul>
-            {% endif %}
-        </div>
+            {%if error%}
+                <div class="alert alert-warning" role="alert">
+                    {{error}}
+                </div>
+                {%endif%}
 
-    {%endblock%}
+                {% if productos | length > 0 %}
+                    <ul>
+                        {% for producto in productos %}
+                            <li>
+                                <a href="/producto/{{producto.id}}">{{ producto.nombre }}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+
+            {%endblock%}

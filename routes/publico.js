@@ -19,12 +19,17 @@ router.post('/buscar', (req, res) => {
     Producto.find({
         nombre: regex
     }).then(resultado => {
-        res.render('publico_index', { productos: resultado });
+        
+        if(resultado.length>0){
+            res.render('publico_index', { productos: resultado });
+        }else{
+            res.render('publico_index', { error: 'No se encontraron productos' });
+        }
+        
     }).catch(err => {
         res.render('publico_error', { error: err });
     })
 });
-
 
 router.get('/producto/:id', (req, res) => {
     Producto.findById(req.params['id']).then(resultado => {

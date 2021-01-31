@@ -133,7 +133,7 @@ router.post('/comentarios/:idProducto', (req, res) => {
         new: true
     }).then(x => {
         if (x) {//Comprobamos si existía el id sino existía devolvería null
-            res.redirect(req.baseUrl)
+            res.redirect(req.baseUrl+'/comentarios/'+req.params['idProducto']);
         } else {
             res.render('admin_error', { error: 'No existe el producto' })
         }
@@ -166,19 +166,13 @@ router.delete('/comentarios/:idProducto/:idComentario', (req, res) => {
             new: true
         }).then(x => {
             if (x) {//Comprobamos si existía el comentario sino existía devolvería null
-                res.status(200).send({
-                    ok: true, resultado: x
-                })
+                res.redirect('/admin/comentarios/'+req.params['idProducto']);
             } else {
-                res.status(400).send({
-                    ok: false, error: "No existe el comentario"
-                })
+                res.render('admin_error',{error:'No existe el comentario'})
             }
 
         }).catch(err => {
-            res.status(400).send({
-                ok: false, error: "Error eliminando el comentario del producto"
-            })
+            res.render('admin_error',{error:'Error en la aplicación'});
         })
 });
 
